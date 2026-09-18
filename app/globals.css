@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-canvas: #ffffff;
+  --color-paper: #f4f4f0;
+  --color-ink: #121212;
+  --color-ink-soft: #5c5c56;
+  --color-ink-faint: #8f8f88;
+  --color-line: #e4e4dd;
+  --color-lime: #dcf94f;
+  --color-lime-soft: #eefbb0;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), Georgia, serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-drift: drift 22s linear infinite;
+  --animate-pulse-node: pulse-node 3.2s ease-in-out infinite;
+
+  @keyframes drift {
+    to { stroke-dashoffset: -1000; }
+  }
+  @keyframes pulse-node {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.12); }
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The shell that gives every page the inset "card on dark mat" look
+   from the reference design. */
+.shell {
+  background: var(--color-canvas);
+}
+
+.rule {
+  border-color: var(--color-line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Entrance reveals.
+
+   Content is visible by default; the animation only ever plays as an
+   enhancement. We deliberately avoid JS viewport observers here — they
+   fail silently inside SVG subtrees and in headless rendering, which
+   would leave the hero diagram blank.
+   --------------------------------------------------------------- */
+.kn-reveal {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kn-reveal {
+      animation: kn-rise both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+  }
+}
+
+@keyframes kn-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered fade for SVG groups in the product loop. Starts visible, so a
+   dropped animation is a non-event. */
+@media (prefers-reduced-motion: no-preference) {
+  .kn-fade {
+    animation: kn-fade-in 0.6s both;
+  }
+}
+
+@keyframes kn-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* One-shot entrance for above-the-fold copy. Plays on load, needs no JS, and
+   leaves the element visible if the animation is skipped entirely. */
+@media (prefers-reduced-motion: no-preference) {
+  .kn-rise-once {
+    animation: kn-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+/* Guard against sideways scroll on small screens. */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }

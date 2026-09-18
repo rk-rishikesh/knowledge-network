@@ -1,69 +1,121 @@
-import Image from "next/image";
+import { Nav } from "@/components/landing/nav";
+import { Hero, SourceStrip } from "@/components/landing/hero";
+import { Alternatives, ComparisonTable } from "@/components/landing/why-ens";
+import { SourcesExplorer } from "@/components/landing/sources-explorer";
+import { ManyApps } from "@/components/landing/many-apps";
+import { AhaMoment } from "@/components/landing/aha";
+import { SourceEcosystem } from "@/components/landing/ecosystem";
+import { NamespaceTree } from "@/components/landing/namespace-tree";
+import { ForAgents } from "@/components/landing/for-agents";
+import { Footer } from "@/components/landing/footer";
+import { ButtonLink, Section } from "@/components/landing/ui";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="mx-auto max-w-[1600px] bg-canvas md:my-6 md:rounded-[32px] md:shadow-[0_1px_60px_rgba(0,0,0,0.06)] md:overflow-hidden">
+      <Nav />
+      <main>
+        {/* 1 — Hero + the product loop */}
+        <Hero />
+        <SourceStrip />
+
+        {/* 2 — Why ENS? */}
+        <Section
+          id="why-ens"
+          tone="paper"
+          eyebrow="WHY ENS"
+          title="Knowledge needs more than storage."
+          lead="It needs identity, ownership, hierarchy and permission. Here is what every alternative gets right — and what it leaves unanswered."
+        >
+          <Alternatives />
+          <div className="mt-20">
+            <ComparisonTable />
+            <p className="mt-12 max-w-3xl font-display text-2xl leading-[1.3] text-ink sm:text-3xl">
+              ENS turns knowledge from application data into an addressable,
+              ownable and composable network resource.
+            </p>
+          </div>
+        </Section>
+
+        {/* 3 — Knowledge everywhere */}
+        <Section
+          id="sources"
+          eyebrow="INGESTION"
+          title="Where does knowledge come from?"
+          lead="Five ways in. Every contribution keeps the source it came from, for the whole of its life."
+        >
+          <SourcesExplorer />
+        </Section>
+
+        {/* 4 — One layer, many apps */}
+        <Section
+          tone="paper"
+          eyebrow="COMPOSABILITY"
+          title="Build once. Consume everywhere."
+        >
+          <ManyApps />
+        </Section>
+
+        {/* 5 — The aha moment */}
+        <Section
+          eyebrow="THE AHA MOMENT"
+          title="Your AI shouldn't start from zero."
+          lead="Personal, shared and domain knowledge are separate namespaces with separate owners. An agent composes them at query time."
+        >
+          <AhaMoment />
+        </Section>
+
+        {/* 6 — Source ecosystem */}
+        <Section
+          tone="paper"
+          eyebrow="ECOSYSTEM"
+          title="Sources, not silos."
+          lead="Wikipedia, Medium, live APIs, agents and applications — each mapped onto source-aware namespaces. One source may contribute to many."
+        >
+          <SourceEcosystem />
+        </Section>
+
+        {/* 7 — Knowledge explorer */}
+        <Section
+          id="explorer"
+          eyebrow="EXPLORER"
+          title="Hierarchy you can resolve."
+          lead="Browse the namespace tree, resolve any node, and inspect its sources, version and provenance."
+        >
+          <NamespaceTree />
+        </Section>
+
+        {/* 8 — Agent integration */}
+        <Section
+          id="for-agents"
+          tone="paper"
+          eyebrow="FOR AGENTS"
+          title="Give your agent access to the world's knowledge."
+          lead="Retrieval returns context and provenance, not merely text. Your agent knows where an answer came from, who reviewed it and which version it read."
+        >
+          <ForAgents />
+        </Section>
+
+        {/* 9 — Developer CTA */}
+        <section id="cta" className="bg-canvas px-6 pb-28 pt-8 sm:px-10">
+          <div className="mx-auto max-w-6xl rounded-[28px] bg-lime px-8 py-20 text-center sm:px-16">
+            <h2 className="mx-auto max-w-2xl font-display text-4xl leading-[1.05] tracking-[-0.015em] text-ink sm:text-5xl md:text-6xl">
+              Build on the Knowledge Network.
+            </h2>
+            <p className="mx-auto mt-7 max-w-lg text-[17px] leading-8 text-ink/70">
+              Connect your application&rsquo;s knowledge to an ENS namespace and let
+              any AI agent consume it — with ownership and provenance intact.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <ButtonLink href="#for-agents">Read the docs</ButtonLink>
+              <ButtonLink href="#explorer" variant="outline">
+                Explore the network
+              </ButtonLink>
+            </div>
+          </div>
+        </section>
       </main>
+      <Footer />
     </div>
   );
 }
